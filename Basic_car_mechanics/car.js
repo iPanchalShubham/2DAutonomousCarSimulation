@@ -1,3 +1,4 @@
+// A helpful resource https://ucfcdl.github.io/html5-tutorial/.
 class Car {
   constructor(x, y, width, height) {
     this.x = x;
@@ -39,9 +40,6 @@ class Car {
     Math.abs(-2);       // 2
     Math.abs(null);     // 0
     Math.abs('');       // 0
-    Math.abs([]);       // 0
-    Math.abs([2]);      // 2
-    Math.abs([1,2]);    // NaN
     */
     if (Math.abs(this.speed) < this.friction) {
       this.speed = 0;
@@ -52,19 +50,28 @@ class Car {
       const flip = this.speed > 0 ? 1 : -1;
       // Whenever the user clicks left or the right key, the angle get increased by 2° everytime.
       if (this.controls.left) {
-        // 0.03491Rad × 180/π = 2Deg
-        this.angle += 0.03 * flip;
+        //because 0.03491Rad × 180/π = 2Deg
+        this.angle -= 0.03 * flip;
+        // or
+        // this.angle += (2 * Math.PI / 180)* flip;
       }
       if (this.controls.right) {
-        // 0.03491Rad × 180/π = 2Deg
-        this.angle -= 0.03 * flip;
+        //because 0.03491Rad × 180/π = 2Deg
+        this.angle += 0.03 * flip;
+        // or
+        // this.angle -= (2 * Math.PI / 180)* flip;
       }
     }
+    // Because the car is moving at an angle, the rates at which x and y increment are different. We calculate these differences using the SINE and COSINE functions in JavaScript.
 
-    this.x -= Math.sin(this.angle) * this.speed;
+    // A helpfull image LINK: https://www.mathsisfun.com/algebra/images/sine-cosine-graph.svg
+
+    // PS: Its feels so facinating that how sine and cosine function's curve depicts the real life motion ( i.e going in a straight line, lets say along x axis then according to the unit circle sin(x) will be 1 and cos(x) will be 0, similar to this going in linear fashion 45° from x-axis you're travelling diagonally ). 
+    this.x += Math.sin(this.angle) * this.speed;
     this.y -= Math.cos(this.angle) * this.speed;
   }
   draw(ctx) {
+    // Save the current state of our context and then center it to the object to rotate.
     ctx.save();
     // It is possible to apply translation to everything that is drawn on a canvas. Translation means relocation of what is drawn.
     ctx.translate(this.x, this.y);
@@ -72,8 +79,11 @@ class Car {
     ctx.rotate(-this.angle);
     //  beginPath() method begins a path, or resets the current path.
     ctx.beginPath();
+    // Draw the image, but subtract half of the width and half of the height from the coordinates. This makes up for the fact that we are rotating around the corner of our object.
     ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
     ctx.fill();
+    // Restore the previous context state so that it is not centered around our object.
     ctx.restore();
+    // The translate method will now take the place of drawing the image at x and y.
   }
 }

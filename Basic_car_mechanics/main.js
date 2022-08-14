@@ -9,7 +9,7 @@ const ctx = canvas.getContext("2d");
 const car = new Car(100, 100, 30, 50);
 
 // Animate
-animate();
+animate(); 
 function animate() {
   car.update();
   //   When we're adjusting height again and again that means that we're removing the old canvas and a new canvas is being added.
