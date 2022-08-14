@@ -51,13 +51,13 @@ class Car {
       // Whenever the user clicks left or the right key, the angle get increased by 2° everytime.
       if (this.controls.left) {
         //because 0.03491Rad × 180/π = 2Deg
-        this.angle -= 0.03 * flip;
+        this.angle += 0.03 * flip;
         // or
         // this.angle += (2 * Math.PI / 180)* flip;
       }
       if (this.controls.right) {
         //because 0.03491Rad × 180/π = 2Deg
-        this.angle += 0.03 * flip;
+        this.angle -= 0.03 * flip;
         // or
         // this.angle -= (2 * Math.PI / 180)* flip;
       }
@@ -67,7 +67,7 @@ class Car {
     // A helpfull image LINK: https://www.mathsisfun.com/algebra/images/sine-cosine-graph.svg
 
     // PS: Its feels so facinating that how sine and cosine function's curve depicts the real life motion ( i.e going in a straight line, lets say along x axis then according to the unit circle sin(x) will be 1 and cos(x) will be 0, similar to this going in linear fashion 45° from x-axis you're travelling diagonally ). 
-    this.x += Math.sin(this.angle) * this.speed;
+    this.x -= Math.sin(this.angle) * this.speed;
     this.y -= Math.cos(this.angle) * this.speed;
   }
   draw(ctx) {
