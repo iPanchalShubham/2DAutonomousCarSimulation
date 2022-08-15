@@ -15,9 +15,15 @@ function animate() {
   car.update();
   //   When we're adjusting height again and again that means that we're removing the old canvas and a new canvas is being added.
   canvas.height = window.innerHeight;
+
+  ctx.save();
+  //Every time our car moves -> the value of y changes thus we're translating the whole canvas every time our car moves 
+  ctx.translate(0, -car.y + canvas.height * 0.7);
+  
   road.draw(ctx);
   car.draw(ctx);
-  // ctx.restore();
+  ctx.restore();
+  
   // request animation function calls its argument (which have to a function) so, many times that it creates a  illusion of movement.
   requestAnimationFrame(animate);
 }
