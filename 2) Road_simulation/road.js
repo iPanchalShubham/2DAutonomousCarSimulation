@@ -1,12 +1,15 @@
 class Road {
   constructor(x, width, lanecount = 3) {
+    // x is the mid point of the canvas in terms of the width if the canvas (i.e canvas.width = 200;).
     this.x = x;
     this.width = width;
+
     this.lanecount = lanecount;
 
     this.left = x - width / 2;
     this.right = x + width / 2;
-
+    // To get the infinite track effect using a very large number.
+    // PS: using Infinity (inbuilt infinity in javascript) our track goes weirdo.
     const infinity = 1000000;
     this.top = -infinity;
     this.bottom = infinity;
@@ -20,11 +23,13 @@ class Road {
       [topRight, bottomRight],
     ];
   }
+  // Getting the center of the laneIndex th ( number ) lane.
   getLaneCenter(laneIndex) {
     const laneWidth = this.width / this.lanecount;
     // This part => this.left+laneWidth/2 says => (gives x coordinate's value of the 1st lane's line (i.e that first left white line) position)/2 => middle of the first lane.
     return this.left + laneWidth / 2 + laneIndex * laneWidth;
   }
+  // Drawing lines and lanes on the track to give the track look of a road.
   draw(ctx) {
     // Left line
     ctx.lineWidth = 5;
@@ -44,7 +49,7 @@ class Road {
 
     // Drawing lanes
     for (let i = 1; i <= this.lanecount - 1; i++) {
-      const x = lerp(this.left,this.right,i/this.lanecount);
+      const x = lerp(this.left, this.right, i / this.lanecount);
 
       // About method context2d.setLineDash(arg)
       // arg: An Array of numbers that specify distances to alternately draw a line and a gap (in coordinate space units).
@@ -65,4 +70,3 @@ class Road {
     });
   }
 }
-
